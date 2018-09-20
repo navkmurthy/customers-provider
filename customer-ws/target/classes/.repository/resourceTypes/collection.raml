@@ -1,0 +1,35 @@
+#%RAML 1.0 ResourceType
+
+usage: Use this resourceType to represent a collection of items
+description: A collection of <<resourcePathName|!uppercamelcase>>
+
+uses:
+  traits: ../library/traits/traits.raml
+
+get:
+  is: [ traits.pageable, 
+        traits.sortable,
+       traits.content-cacheable
+       ]
+  description: Get a list of <<resourcePathName>>
+  responses:
+    200:
+      body:
+        application/json:
+          example: <<response-example>>
+post:
+  description: |
+    Create a new <<resourcePathName|!singularize>>
+  body:
+    application/json:
+      example: <<request-example>>
+  responses:
+    201:
+      description: |
+        Succesfully created a new resource
+      headers:
+        Location:
+          description: |
+            Location of the newly created resource
+          type: string
+          required: false

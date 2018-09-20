@@ -1,0 +1,4 @@
+{
+"error_code" : "Not Acceptable",
+"error_detail" : "The requested resource is capable of generating only content not acceptable according to the Accept headers sent in the request"
+}

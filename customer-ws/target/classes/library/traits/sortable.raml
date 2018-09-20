@@ -1,0 +1,14 @@
+#%RAML 1.0 Trait
+usage: Apply this to a method that support sorting.
+queryParameters:
+  orderBy?:
+    description: |
+      Order by field: <<fieldsList>>
+    type: string
+    required: false
+    example: id,name
+  order?:
+    description: Order Format
+    enum: [desc, asc]
+    default: desc
+    required: false

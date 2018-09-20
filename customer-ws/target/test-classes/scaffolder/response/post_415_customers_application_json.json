@@ -1,0 +1,4 @@
+{
+"error_code" : "Unsupported Media Type",
+"error_detail" : "The request entity has a media type which the server or resource does not support"
+}

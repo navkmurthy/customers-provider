@@ -1,0 +1,76 @@
+#%RAML 1.0 ResourceType
+
+usage: Apply this resource type to any resource that returns single item of a collection
+
+uses:
+  traits: ../traits/traits.raml
+
+description: Single item of the collection of <<resourcePathName>>
+get:
+  is: [ traits.content-cacheable,traits.partial]
+  description: |
+    Retrieve the specified <<resourcePathName>>
+  responses:
+    200:
+      description: |
+        Succesfully retrieved <<resourcePathName>>
+      body:
+        application/json:
+          example: |
+            <<get-response-example>>
+    404:
+      body:
+        application/json:
+          example: |
+            {"message": "<<resourcePathName|!singularize>> not found" }
+patch:
+  is: [ traits.4xx-errorable,traits.5xx-errorable ]
+  description: |
+    Update a field of a <<resourcePathName>>
+  body:
+    application/json:
+      example: |
+        <<patch-request-example>>
+  responses:
+    204:
+      description: Succesfully updated <<resourcePathName>>
+    404:
+      body:
+        application/json:
+          example: |
+           {"message": "<<resourcePathName|!singularize>> not found" }
+put:
+  is: [ traits.4xx-errorable,traits.5xx-errorable,traits.conflict-errorable ]
+  description: |
+    Update an existing r<<resourcePathName>>
+  body:
+    application/json:
+      example: |
+        <<put-request-example>>
+  responses:
+    204:
+      description: |
+        Succesfully updated the resource
+    404:
+      body:
+        application/json:
+          example: |
+            {"message": "<<resourcePathName|!singularize>> not found" }
+    409:
+      body:
+        application/json:
+          example: |
+           {"message": "<<resourcePathName|!singularize>> Conflict" }
+delete:
+  is: [ traits.4xx-errorable,traits.5xx-errorable ]
+  description: |
+    Delete resource
+  responses:
+    204:
+      description: |
+        Succesfully deleted resource
+    404:
+      body:
+        application/json:
+          example: |
+           {"message": "<<resourcePathName|!singularize>> not found" }

@@ -1,0 +1,12 @@
+#%RAML 1.0 Trait
+
+description: Use this headers for tracking transactions end-to-end
+usage: Apply on all the operations to track
+
+headers:
+  X-Source:
+    description: Source System Information
+    type: string
+    minLength: 1
+    required: true
+    example: Mobile App | Web

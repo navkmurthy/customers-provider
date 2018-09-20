@@ -1,0 +1,4 @@
+{
+"error_code" : "Unauthorized",
+"error_detail" : "Authentication is required and has failed or has not yet been provided"
+}

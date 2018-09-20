@@ -1,0 +1,12 @@
+#%RAML 1.0 DataType
+type: object
+properties:
+  id: 
+    type: string
+    pattern: ^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$
+  first_name?:
+  last_name?: 
+  addresses?: 
+    type: array
+    items: 
+      type: !include Address.raml

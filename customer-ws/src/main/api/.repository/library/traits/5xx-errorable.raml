@@ -1,0 +1,14 @@
+#%RAML 1.0 Trait
+description: Common error responses returned by an API
+usage: Apply to all operations
+
+responses:
+  500:
+    description: Internal Server Error
+    body:
+      application/json:
+        type: !include ../dataTypes/Error.raml
+        example:
+          value:
+              error_code : Internal Server Error
+              error_detail : Something went wrong while processing the request. Please contact the administrator.

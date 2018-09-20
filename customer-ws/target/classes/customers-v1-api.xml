@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<mule xmlns:doc="http://www.mulesoft.org/schema/mule/documentation" xmlns="http://www.mulesoft.org/schema/mule/core" xmlns:apikit="http://www.mulesoft.org/schema/mule/apikit" xmlns:http="http://www.mulesoft.org/schema/mule/http" xmlns:spring="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+http://www.mulesoft.org/schema/mule/http http://www.mulesoft.org/schema/mule/http/current/mule-http.xsd
+http://www.mulesoft.org/schema/mule/apikit http://www.mulesoft.org/schema/mule/apikit/current/mule-apikit.xsd
+http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.1.xsd">
+    <http:listener-config name="customers-v1-api-httpListenerConfig" host="0.0.0.0" port="8081" doc:name="HTTP Listener Configuration"/>
+    <apikit:config name="customers-v1-api-config" raml="customers-v1-api.raml" consoleEnabled="false" doc:name="Router"/>
+    <flow name="customers-v1-api-main">
+        <http:listener config-ref="customers-v1-api-httpListenerConfig" path="/api/*" doc:name="HTTP"/>
+        <apikit:router config-ref="customers-v1-api-config" doc:name="APIkit Router"/>
+        <exception-strategy ref="customers-v1-api-apiKitGlobalExceptionMapping" doc:name="Reference Exception Strategy"/>
+    </flow>
+    <flow name="customers-v1-api-console">
+        <http:listener config-ref="customers-v1-api-httpListenerConfig" path="/console/*" doc:name="HTTP"/>
+        <apikit:console config-ref="customers-v1-api-config" doc:name="APIkit Console"/>
+    </flow>
+    <flow name="put:/customers/{customer_id}:customers-v1-api-config">
+        <set-payload value="{&#xA;&quot;error_code&quot; : &quot;Not found&quot;,&#xA;&quot;error_detail&quot; : &quot;The requested resource could not be found but may be available in the future.&quot;&#xA;}" doc:name="Set Payload"/>
+    </flow>
+    <flow name="put:/customers/{customer_id}/orders/{order_id}:customers-v1-api-config">
+        <set-payload value="{&#xA;&quot;error_code&quot; : &quot;Not found&quot;,&#xA;&quot;error_detail&quot; : &quot;The requested resource could not be found but may be available in the future.&quot;&#xA;}" doc:name="Set Payload"/>
+    </flow>
+    <flow name="put:/customers/{customer_id}/products/{product_id}:customers-v1-api-config">
+        <set-payload value="{&#xA;&quot;error_code&quot; : &quot;Not found&quot;,&#xA;&quot;error_detail&quot; : &quot;The requested resource could not be found but may be available in the future.&quot;&#xA;}" doc:name="Set Payload"/>
+    </flow>
+    <flow name="delete:/customers/{customer_id}:customers-v1-api-config">
+        <set-payload value="{&#xA;&quot;error_code&quot; : &quot;Not found&quot;,&#xA;&quot;error_detail&quot; : &quot;The requested resource could not be found but may be available in the future.&quot;&#xA;}" doc:name="Set Payload"/>
+    </flow>
+    <flow name="delete:/customers/{customer_id}/orders/{order_id}:customers-v1-api-config">
+        <set-payload value="{&#xA;&quot;error_code&quot; : &quot;Not found&quot;,&#xA;&quot;error_detail&quot; : &quot;The requested resource could not be found but may be available in the future.&quot;&#xA;}" doc:name="Set Payload"/>
+    </flow>
+    <flow name="delete:/customers/{customer_id}/products/{product_id}:customers-v1-api-config">
+        <set-payload value="{&#xA;&quot;error_code&quot; : &quot;Not found&quot;,&#xA;&quot;error_detail&quot; : &quot;The requested resource could not be found but may be available in the future.&quot;&#xA;}" doc:name="Set Payload"/>
+    </flow>
+    <flow name="patch:/customers/{customer_id}:customers-v1-api-config">
+        <set-payload value="{&#xA;&quot;error_code&quot; : &quot;Not found&quot;,&#xA;&quot;error_detail&quot; : &quot;The requested resource could not be found but may be available in the future.&quot;&#xA;}" doc:name="Set Payload"/>
+    </flow>
+    <flow name="patch:/customers/{customer_id}/orders/{order_id}:customers-v1-api-config">
+        <set-payload value="{&#xA;&quot;error_code&quot; : &quot;Not found&quot;,&#xA;&quot;error_detail&quot; : &quot;The requested resource could not be found but may be available in the future.&quot;&#xA;}" doc:name="Set Payload"/>
+    </flow>
+    <flow name="patch:/customers/{customer_id}/products/{product_id}:customers-v1-api-config">
+        <set-payload value="{&#xA;&quot;error_code&quot; : &quot;Not found&quot;,&#xA;&quot;error_detail&quot; : &quot;The requested resource could not be found but may be available in the future.&quot;&#xA;}" doc:name="Set Payload"/>
+    </flow>
+    <flow name="get:/customers:customers-v1-api-config">
+        <set-payload value="[&#xA;{&#xA;&quot;id&quot; : &quot;48dcbc2b-62a5-4879-ade0-456d2bdb592a&quot;,&#xA;&quot;first_name&quot; : &quot;Micheal&quot;,&#xA;&quot;last_name&quot; : &quot;First&quot;,&#xA;&quot;addresses&quot; : [&#xA;{&#xA;&quot;address_type&quot; : &quot;work&quot;,&#xA;&quot;street_address&quot; : &quot;1,Smith St&quot;,&#xA;&quot;address_locality&quot; : &quot;Sydney&quot;,&#xA;&quot;address_region&quot; : &quot;NSW&quot;,&#xA;&quot;address_country&quot; : &quot;Australia&quot;,&#xA;&quot;postal_code&quot; : &quot;2000&quot;&#xA;},&#xA;{&#xA;&quot;address_type&quot; : &quot;res&quot;,&#xA;&quot;street_address&quot; : &quot;20,George St&quot;,&#xA;&quot;address_locality&quot; : &quot;Parramatta&quot;,&#xA;&quot;address_region&quot; : &quot;NSW&quot;,&#xA;&quot;address_country&quot; : &quot;Australia&quot;,&#xA;&quot;postal_code&quot; : &quot;2150&quot;&#xA;}&#xA;]&#xA;},&#xA;{&#xA;&quot;id&quot; : &quot;8f0745fb-278f-4318-85f6-b0fc3d93e3cb&quot;,&#xA;&quot;first_name&quot; : &quot;Chris&quot;,&#xA;&quot;last_name&quot; : &quot;Watson&quot;,&#xA;&quot;addresses&quot; : [&#xA;{&#xA;&quot;address_type&quot; : &quot;work&quot;,&#xA;&quot;street_address&quot; : &quot;2,Smith St&quot;,&#xA;&quot;address_locality&quot; : &quot;Sydney&quot;,&#xA;&quot;address_region&quot; : &quot;NSW&quot;,&#xA;&quot;address_country&quot; : &quot;Australia&quot;,&#xA;&quot;postal_code&quot; : &quot;2000&quot;&#xA;},&#xA;{&#xA;&quot;address_type&quot; : &quot;res&quot;,&#xA;&quot;street_address&quot; : &quot;21,George St&quot;,&#xA;&quot;address_locality&quot; : &quot;Parramatta&quot;,&#xA;&quot;address_region&quot; : &quot;NSW&quot;,&#xA;&quot;address_country&quot; : &quot;Australia&quot;,&#xA;&quot;postal_code&quot; : &quot;2150&quot;&#xA;}&#xA;]&#xA;},&#xA;{&#xA;&quot;id&quot; : &quot;65601eaf-e35a-483e-b225-34566904794f&quot;,&#xA;&quot;first_name&quot; : &quot;Micheal&quot;,&#xA;&quot;last_name&quot; : &quot;First&quot;,&#xA;&quot;addresses&quot; : [&#xA;{&#xA;&quot;address_type&quot; : &quot;work&quot;,&#xA;&quot;street_address&quot; : &quot;3,Smith St&quot;,&#xA;&quot;address_locality&quot; : &quot;Sydney&quot;,&#xA;&quot;address_region&quot; : &quot;NSW&quot;,&#xA;&quot;address_country&quot; : &quot;Australia&quot;,&#xA;&quot;postal_code&quot; : &quot;2000&quot;&#xA;},&#xA;{&#xA;&quot;address_type&quot; : &quot;res&quot;,&#xA;&quot;street_address&quot; : &quot;22,George St&quot;,&#xA;&quot;address_locality&quot; : &quot;Parramatta&quot;,&#xA;&quot;address_region&quot; : &quot;NSW&quot;,&#xA;&quot;address_country&quot; : &quot;Australia&quot;,&#xA;&quot;postal_code&quot; : &quot;2150&quot;&#xA;}&#xA;]&#xA;},&#xA;{&#xA;&quot;id&quot; : &quot;db3eb1a5-0b12-4df6-b065-385453b7662f&quot;,&#xA;&quot;first_name&quot; : &quot;Edmund&quot;,&#xA;&quot;last_name&quot; : &quot;Barton&quot;,&#xA;&quot;addresses&quot; : [&#xA;{&#xA;&quot;address_type&quot; : &quot;work&quot;,&#xA;&quot;street_address&quot; : &quot;4,Smith St&quot;,&#xA;&quot;address_locality&quot; : &quot;Hunter&quot;,&#xA;&quot;address_region&quot; : &quot;NSW&quot;,&#xA;&quot;address_country&quot; : &quot;Australia&quot;,&#xA;&quot;postal_code&quot; : &quot;2000&quot;&#xA;},&#xA;{&#xA;&quot;address_type&quot; : &quot;res&quot;,&#xA;&quot;street_address&quot; : &quot;23,George St&quot;,&#xA;&quot;address_locality&quot; : &quot;Parramatta&quot;,&#xA;&quot;address_region&quot; : &quot;NSW&quot;,&#xA;&quot;address_country&quot; : &quot;Australia&quot;,&#xA;&quot;postal_code&quot; : &quot;2150&quot;&#xA;}&#xA;]&#xA;},&#xA;{&#xA;&quot;id&quot; : &quot;1fbe1aee-f803-4c39-aaa1-607e12dddc2f&quot;,&#xA;&quot;first_name&quot; : &quot;Alfred&quot;,&#xA;&quot;last_name&quot; : &quot;Deakin&quot;,&#xA;&quot;addresses&quot; : [&#xA;{&#xA;&quot;address_type&quot; : &quot;work&quot;,&#xA;&quot;street_address&quot; : &quot;5,Smith St&quot;,&#xA;&quot;address_locality&quot; : &quot;Sydney&quot;,&#xA;&quot;address_region&quot; : &quot;NSW&quot;,&#xA;&quot;address_country&quot; : &quot;Australia&quot;,&#xA;&quot;postal_code&quot; : &quot;2000&quot;&#xA;},&#xA;{&#xA;&quot;address_type&quot; : &quot;res&quot;,&#xA;&quot;street_address&quot; : &quot;24,George St&quot;,&#xA;&quot;address_locality&quot; : &quot;Parramatta&quot;,&#xA;&quot;address_region&quot; : &quot;NSW&quot;,&#xA;&quot;address_country&quot; : &quot;Australia&quot;,&#xA;&quot;postal_code&quot; : &quot;2150&quot;&#xA;}&#xA;]&#xA;}&#xA;]" doc:name="Set Payload"/>
+    </flow>
+    <flow name="get:/customers/{customer_id}/orders:customers-v1-api-config">
+        <set-payload value="[&#xA;{&#xA;&quot;id&quot; : &quot;c42af9c6-b01b-4a91-a88b-c15cdbe1ecad&quot;,&#xA;&quot;customer_id&quot; : &quot;48dcbc2b-62a5-4879-ade0-456d2bdb592a&quot;,&#xA;&quot;order_reference&quot; : 1,&#xA;&quot;product_codes&quot; : [&#xA;1,&#xA;2,&#xA;3&#xA;],&#xA;&quot;total_cost&quot; : &quot;AUD 1000&quot;&#xA;},&#xA;{&#xA;&quot;id&quot; : &quot;6a23dd64-47a3-40c3-a1cc-ec2d09cb871a&quot;,&#xA;&quot;order_reference&quot; : 2,&#xA;&quot;product_codes&quot; : [&#xA;4,&#xA;5,&#xA;6&#xA;],&#xA;&quot;total_cost&quot; : &quot;AUD 2000&quot;&#xA;}&#xA;]" doc:name="Set Payload"/>
+    </flow>
+    <flow name="get:/customers/{customer_id}/products:customers-v1-api-config">
+        <set-payload value="[&#xA;{&#xA;&quot;id&quot; : &quot;f206609c-29a6-4f2c-b658-c35702257a6b&quot;,&#xA;&quot;customer_id&quot; : &quot;48dcbc2b-62a5-4879-ade0-456d2bdb592a&quot;,&#xA;&quot;product_code&quot; : 1,&#xA;&quot;product_type&quot; : &quot;Mobile&quot;&#xA;},&#xA;{&#xA;&quot;id&quot; : &quot;5cbf8faf-01b7-475e-9dad-a499e54e5b91&quot;,&#xA;&quot;customer_id&quot; : &quot;48dcbc2b-62a5-4879-ade0-456d2bdb592a&quot;,&#xA;&quot;product_code&quot; : 2,&#xA;&quot;product_type&quot; : &quot;Laptop&quot;&#xA;},&#xA;{&#xA;&quot;id&quot; : &quot;8f4bf2fc-32cf-49f3-a3e5-03a3cf40df8a&quot;,&#xA;&quot;customer_id&quot; : &quot;48dcbc2b-62a5-4879-ade0-456d2bdb592a&quot;,&#xA;&quot;product_code&quot; : 3,&#xA;&quot;product_type&quot; : &quot;Monitor&quot;&#xA;},&#xA;{&#xA;&quot;id&quot; : &quot;2b09fd46-dca9-4283-a5ba-daf529b982fb&quot;,&#xA;&quot;customer_id&quot; : &quot;48dcbc2b-62a5-4879-ade0-456d2bdb592a&quot;,&#xA;&quot;product_code&quot; : 4,&#xA;&quot;product_type&quot; : &quot;Tablet&quot;&#xA;},&#xA;{&#xA;&quot;id&quot; : &quot;a6dbf86b-7643-46f5-9f4b-96155002ad61&quot;,&#xA;&quot;customer_id&quot; : &quot;48dcbc2b-62a5-4879-ade0-456d2bdb592a&quot;,&#xA;&quot;product_code&quot; : 5,&#xA;&quot;product_type&quot; : &quot;Watch&quot;&#xA;},&#xA;{&#xA;&quot;id&quot; : &quot;6d0a842e-af99-41d2-ac3c-d3be410303a6&quot;,&#xA;&quot;customer_id&quot; : &quot;48dcbc2b-62a5-4879-ade0-456d2bdb592a&quot;,&#xA;&quot;product_code&quot; : 6,&#xA;&quot;product_type&quot; : &quot;Headphone&quot;&#xA;}&#xA;]" doc:name="Set Payload"/>
+    </flow>
+    <flow name="get:/customers/{customer_id}:customers-v1-api-config">
+        <set-payload value="{&#xA;&quot;id&quot; : &quot;48dcbc2b-62a5-4879-ade0-456d2bdb592a&quot;,&#xA;&quot;first_name&quot; : &quot;Micheal&quot;,&#xA;&quot;last_name&quot; : &quot;First&quot;,&#xA;&quot;addresses&quot; : [&#xA;{&#xA;&quot;address_type&quot; : &quot;work&quot;,&#xA;&quot;street_address&quot; : &quot;1,Smith St&quot;,&#xA;&quot;address_locality&quot; : &quot;Sydney&quot;,&#xA;&quot;address_region&quot; : &quot;NSW&quot;,&#xA;&quot;address_country&quot; : &quot;Australia&quot;,&#xA;&quot;postal_code&quot; : &quot;2000&quot;&#xA;},&#xA;{&#xA;&quot;address_type&quot; : &quot;res&quot;,&#xA;&quot;street_address&quot; : &quot;20,George St&quot;,&#xA;&quot;address_locality&quot; : &quot;Parramatta&quot;,&#xA;&quot;address_region&quot; : &quot;NSW&quot;,&#xA;&quot;address_country&quot; : &quot;Australia&quot;,&#xA;&quot;postal_code&quot; : &quot;2150&quot;&#xA;}&#xA;]&#xA;}" doc:name="Set Payload"/>
+    </flow>
+    <flow name="get:/customers/{customer_id}/orders/{order_id}:customers-v1-api-config">
+        <set-payload value="{&#xA;&quot;id&quot; : &quot;c42af9c6-b01b-4a91-a88b-c15cdbe1ecad&quot;,&#xA;&quot;customer_id&quot; : &quot;48dcbc2b-62a5-4879-ade0-456d2bdb592a&quot;,&#xA;&quot;order_reference&quot; : 1,&#xA;&quot;product_codes&quot; : [&#xA;1,&#xA;2,&#xA;3&#xA;],&#xA;&quot;total_cost&quot; : &quot;AUD 1000&quot;&#xA;}" doc:name="Set Payload"/>
+    </flow>
+    <flow name="get:/customers/{customer_id}/products/{product_id}:customers-v1-api-config">
+        <set-payload value="{&#xA;&quot;id&quot; : &quot;f206609c-29a6-4f2c-b658-c35702257a6b&quot;,&#xA;&quot;customer_id&quot; : &quot;48dcbc2b-62a5-4879-ade0-456d2bdb592a&quot;,&#xA;&quot;product_code&quot; : 1,&#xA;&quot;product_type&quot; : &quot;Mobile&quot;&#xA;}" doc:name="Set Payload"/>
+    </flow>
+    <flow name="post:/customers:customers-v1-api-config">
+        <set-payload value="{&#xA;&quot;error_code&quot; : &quot;Bad request&quot;,&#xA;&quot;error_detail&quot; : &quot;The server cannot or will not process the request due to an apparent client error.&quot;&#xA;}" doc:name="Set Payload"/>
+    </flow>
+    <flow name="post:/customers/{customer_id}/orders:customers-v1-api-config">
+        <set-payload value="#[NullPayload.getInstance()]" doc:name="Set Payload"/>
+    </flow>
+    <flow name="post:/customers/{customer_id}/products:customers-v1-api-config">
+        <set-payload value="#[NullPayload.getInstance()]" doc:name="Set Payload"/>
+    </flow>
+    <flow name="post:/customers/{search}:customers-v1-api-config">
+        <set-payload value="[&#xA;{&#xA;&quot;id&quot; : &quot;48dcbc2b-62a5-4879-ade0-456d2bdb592a&quot;,&#xA;&quot;first_name&quot; : &quot;Micheal&quot;,&#xA;&quot;last_name&quot; : &quot;First&quot;,&#xA;&quot;addresses&quot; : [&#xA;{&#xA;&quot;address_type&quot; : &quot;work&quot;,&#xA;&quot;street_address&quot; : &quot;1,Smith St&quot;,&#xA;&quot;address_locality&quot; : &quot;Sydney&quot;,&#xA;&quot;address_region&quot; : &quot;NSW&quot;,&#xA;&quot;address_country&quot; : &quot;Australia&quot;,&#xA;&quot;postal_code&quot; : &quot;2000&quot;&#xA;},&#xA;{&#xA;&quot;address_type&quot; : &quot;res&quot;,&#xA;&quot;street_address&quot; : &quot;20,George St&quot;,&#xA;&quot;address_locality&quot; : &quot;Parramatta&quot;,&#xA;&quot;address_region&quot; : &quot;NSW&quot;,&#xA;&quot;address_country&quot; : &quot;Australia&quot;,&#xA;&quot;postal_code&quot; : &quot;2150&quot;&#xA;}&#xA;]&#xA;},&#xA;{&#xA;&quot;id&quot; : &quot;65601eaf-e35a-483e-b225-34566904794f&quot;,&#xA;&quot;first_name&quot; : &quot;Micheal&quot;,&#xA;&quot;last_name&quot; : &quot;Second&quot;,&#xA;&quot;addresses&quot; : [&#xA;{&#xA;&quot;address_type&quot; : &quot;work&quot;,&#xA;&quot;street_address&quot; : &quot;3,Smith St&quot;,&#xA;&quot;address_locality&quot; : &quot;Sydney&quot;,&#xA;&quot;address_region&quot; : &quot;NSW&quot;,&#xA;&quot;address_country&quot; : &quot;Australia&quot;,&#xA;&quot;postal_code&quot; : &quot;2000&quot;&#xA;},&#xA;{&#xA;&quot;address_type&quot; : &quot;res&quot;,&#xA;&quot;street_address&quot; : &quot;22,George St&quot;,&#xA;&quot;address_locality&quot; : &quot;Parramatta&quot;,&#xA;&quot;address_region&quot; : &quot;NSW&quot;,&#xA;&quot;address_country&quot; : &quot;Australia&quot;,&#xA;&quot;postal_code&quot; : &quot;2150&quot;&#xA;}&#xA;]&#xA;}&#xA;]" doc:name="Set Payload"/>
+    </flow>
+    <apikit:mapping-exception-strategy name="customers-v1-api-apiKitGlobalExceptionMapping">
+        <apikit:mapping statusCode="404">
+            <apikit:exception value="org.mule.module.apikit.exception.NotFoundException" />
+            <set-property propertyName="Content-Type" value="application/json" doc:name="Property"/>
+            <set-payload value="{ &quot;message&quot;: &quot;Resource not found&quot; }" doc:name="Set Payload"/>
+        </apikit:mapping>
+        <apikit:mapping statusCode="405">
+            <apikit:exception value="org.mule.module.apikit.exception.MethodNotAllowedException" />
+            <set-property propertyName="Content-Type" value="application/json" doc:name="Property"/>
+            <set-payload value="{ &quot;message&quot;: &quot;Method not allowed&quot; }" doc:name="Set Payload"/>
+        </apikit:mapping>
+        <apikit:mapping statusCode="415">
+            <apikit:exception value="org.mule.module.apikit.exception.UnsupportedMediaTypeException" />
+            <set-property propertyName="Content-Type" value="application/json" doc:name="Property"/>
+            <set-payload value="{ &quot;message&quot;: &quot;Unsupported media type&quot; }" doc:name="Set Payload"/>
+        </apikit:mapping>
+        <apikit:mapping statusCode="406">
+            <apikit:exception value="org.mule.module.apikit.exception.NotAcceptableException" />
+            <set-property propertyName="Content-Type" value="application/json" doc:name="Property"/>
+            <set-payload value="{ &quot;message&quot;: &quot;Not acceptable&quot; }" doc:name="Set Payload"/>
+        </apikit:mapping>
+        <apikit:mapping statusCode="400">
+            <apikit:exception value="org.mule.module.apikit.exception.BadRequestException" />
+            <set-property propertyName="Content-Type" value="application/json" doc:name="Property"/>
+            <set-payload value="{ &quot;message&quot;: &quot;Bad request&quot; }" doc:name="Set Payload"/>
+        </apikit:mapping>
+    </apikit:mapping-exception-strategy>
+</mule>

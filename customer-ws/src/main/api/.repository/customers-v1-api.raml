@@ -1,0 +1,355 @@
+#%RAML 1.0
+
+title: Customers API
+version: v1
+description: Customer API is a RESTful API design the operations to create,retrieve ,update,replace ,delete and Search Customer resource.
+
+baseUri: http://localhost/{version}
+
+mediaType: [ application/json ]
+
+
+  
+traits: 
+  auditable: !include library/traits/auditable.raml
+  conflict-errorable: !include library/traits/conflict-errorable.raml
+  source-trackable: !include library/traits/source-trackable.raml
+  content-cacheable: !include library/traits/content-cacheable.raml
+  no-cacheable: !include library/traits/no-cacheable.raml
+  cross-originable: !include library/traits/cross-originable.raml
+  pageable: !include library/traits/pageable.raml
+  partial: !include library/traits/partial.raml
+  sortable: !include library/traits/sortable.raml
+  4xx-errorable: !include library/traits/4xx-errorable.raml
+  5xx-errorable: !include library/traits/5xx-errorable.raml
+  oauth-authorizeable: !include library/traits/oauth-authorizeable.raml  
+
+/customers:
+  description: Describes the methods available for creating, updating, retrieving ,deleting and searching Customers.
+  post:
+    is: [source-trackable,auditable, 4xx-errorable,5xx-errorable,conflict-errorable ]
+    description: Create a new Customer
+    body:
+      application/json:
+        example: !include library/examples/customer/PostCustomer.raml
+    responses:
+      201:
+        description: |
+            Succesfully created a new resource
+        headers:
+            Location:
+              description: |
+                Location of the newly created resource
+              type: string
+              required: false
+  get:
+    is: [ source-trackable,pageable, sortable ,auditable,4xx-errorable,5xx-errorable,content-cacheable]
+    description: List all  matching query criteria, if provided; otherwise list all 
+    queryParameters:
+      first_name?: string
+      last_Name?: string
+    responses:
+      200:
+        body:
+          application/json:
+              example: !include library/examples/customer/GetCustomers.raml
+  /{search}: 
+    description: Search for all Customers based on criteria and the search paramters provided
+    post:
+      is: [ source-trackable,auditable, 4xx-errorable,5xx-errorable,conflict-errorable ]
+      body:
+        application/json:
+          example: !include library/examples/customer/SearchCustomers.raml
+      responses:
+        200:
+          body:
+            application/json:
+              example: !include library/examples/customer/GetSearchCustomers.raml
+  /{customer_id}:
+    get:
+      is: [source-trackable,pageable, sortable ,auditable,4xx-errorable,5xx-errorable,content-cacheable ]
+      description: |
+        Retrieve the specified Customer
+      responses:
+        200:
+          description: |
+            Succesfully retrieved Customer
+          body:
+            application/json:
+              example:
+                !include library/examples/customer/GetCustomer.raml
+        404:
+          description: Resource not found
+          body:
+            application/json:
+              type: !include library/dataTypes/Error.raml
+              example:
+                error_code: Not found
+                error_detail: The requested resource could not be found but may be available in the future.
+    patch:
+      is: [source-trackable,auditable, 4xx-errorable,5xx-errorable,conflict-errorable ]
+      description: |
+        Updates an existing Customer similar to the creation of New Customer except that all fields are optional here.
+      body:
+        application/json:
+          example: !include library/examples/customer/PatchCustomer.raml
+      responses:
+        204:
+          description: Succesfully updated Customer
+        404:
+          description: Resource not found
+          body:
+            application/json:
+              type: !include library/dataTypes/Error.raml
+              example:
+                        error_code: Not found
+                        error_detail: The requested resource could not be found but may be available in the future.
+    put:
+      is: [ ]
+      description: Replaces the existing Customer with the updated Customer completely
+      body:
+        application/json:
+          example: !include library/examples/customer/PutCustomer.raml
+      responses:
+        204:
+          description: |
+            Succesfully updated the resource
+        404:
+          description: Resource not found
+          body:
+            application/json:
+              type: !include library/dataTypes/Error.raml
+              example:
+                        error_code: Not found
+                        error_detail: The requested resource could not be found but may be available in the future.
+        409:
+          body:
+            application/json:
+               example:  
+                error_code: Conflict
+                error_detail: Request could not be processed because of conflict in the current state of the resource
+    delete:
+      is: []
+      description: |
+        Delete the Customer
+      responses:
+        204:
+          description: |
+              Succesfully deleted the customer
+        404:
+          body:
+            application/json:
+              example: 
+                error_code: Not found
+                error_detail: The requested resource could not be found but may be available in the future.
+    /orders:
+      description: List of Orders
+      post:
+        is: [ ]
+        description: Create a new Order
+        body:
+          application/json:
+            example: !include /library/examples/order/PostOrder.raml
+        responses:
+          201:
+            description: |
+              Succesfully created a new resource
+              headers:
+                Location:
+                  description: |
+                    Location of the newly created resource
+                    type: string
+                    required: false
+      get:
+        is: [ source-trackable,pageable, sortable ,auditable,4xx-errorable,5xx-errorable]
+        description: Get a list of Order
+        responses:
+          200:
+            body:
+              application/json:
+                  example: !include /library/examples/order/GetOrders.raml
+      /{order_id}:
+        get:
+          is: [ ]
+          description: |
+            Retrieve the specified order
+          responses:
+            200:
+              description: |
+                Succesfully retrieved order
+              body:
+                application/json:
+                  example:
+                    !include /library/examples/order/GetOrder.raml
+            404:
+              description: Resource not found
+              body:
+                application/json:
+                  type: !include /library/dataTypes/Error.raml
+                  example:
+                    error_code: Not found
+                    error_detail: The requested resource could not be found but may be available in the future.
+        patch:
+          is: [ ]
+          description: |
+            Update a field of a order
+          body:
+            application/json:
+              example: !include /library/examples/order/PatchOrder.raml
+          responses:
+            204:
+              description: Succesfully updated order
+            404:
+              description: Resource not found
+              body:
+                application/json:
+                  type: !include /library/dataTypes/Error.raml
+                  example:
+                            error_code: Not found
+                            error_detail: The requested resource could not be found but may be available in the future.
+        put:
+          is: [  ]
+          description: Update an existing order
+          body:
+            application/json:
+              example: !include /library/examples/order/PutOrder.raml
+          responses:
+            204:
+              description: |
+                Succesfully updated the resource
+            404:
+              description: Resource not found
+              body:
+                application/json:
+                  type: !include /library/dataTypes/Error.raml
+                  example:
+                            error_code: Not found
+                            error_detail: The requested resource could not be found but may be available in the future.
+            409:
+              body:
+                application/json:
+                  example:  
+                    error_code: Conflict
+                    error_detail: Request could not be processed because of conflict in the current state of the resource
+        delete:
+          is: [ ]
+          description: |
+            Delete resource
+          responses:
+            204:
+              description: |
+                Succesfully deleted resource
+            404:
+              description: Resource not found
+              body:
+                application/json:
+                  type: !include /library/dataTypes/Error.raml
+                  example:
+                          error_code: Not found
+                          error_detail: The requested resource could not be found but may be available in the future.
+    /products:
+      description: List of Products
+      post:
+        is: []
+        description: Create a new Product
+        body:
+          application/json:
+            example: !include /library/examples/product/PostProduct.raml
+        responses:
+          201:
+            description: |
+              Succesfully created a new resource
+              headers:
+                Location:
+                  description: |
+                    Location of the newly created resource
+                    type: string
+                    required: false
+      get:
+        is: [ source-trackable,pageable, sortable ,auditable,4xx-errorable,5xx-errorable]
+        description: Get a list of Product
+        responses:
+          200:
+            body:
+              application/json:
+                  example: !include /library/examples/product/GetProducts.raml
+      /{product_id}:
+        get:
+          is: [ ]
+          description: |
+            Retrieve the specified product
+          responses:
+            200:
+              description: |
+                Succesfully retrieved product
+              body:
+                application/json:
+                  example:
+                    !include /library/examples/product/GetProduct.raml
+            404:
+              description: Resource not found
+              body:
+                application/json:
+                  type: !include /library/dataTypes/Error.raml
+                  example:
+                    error_code: Not found
+                    error_detail: The requested resource could not be found but may be available in the future.
+        patch:
+          is: [ ]
+          description: |
+            Update a field of a product
+          body:
+            application/json:
+              example: !include /library/examples/product/PatchProduct.raml
+          responses:
+            204:
+              description: Succesfully updated product
+            404:
+              description: Resource not found
+              body:
+                application/json:
+                  type: !include /library/dataTypes/Error.raml
+                  example:
+                            error_code: Not found
+                            error_detail: The requested resource could not be found but may be available in the future.
+        put:
+          is: [ ]
+          description: Update an existing product
+          body:
+            application/json:
+              example: !include /library/examples/product/PutProduct.raml
+          responses:
+            204:
+              description: |
+                Succesfully updated the resource
+            404:
+              description: Resource not found
+              body:
+                application/json:
+                  type: !include /library/dataTypes/Error.raml
+                  example:
+                            error_code: Not found
+                            error_detail: The requested resource could not be found but may be available in the future.
+            409:
+              body:
+                application/json:
+                  example:  
+                    error_code: Conflict
+                    error_detail: Request could not be processed because of conflict in the current state of the resource
+        delete:
+          is: [ ]
+          description: |
+            Delete resource
+          responses:
+            204:
+              description: |
+                Succesfully deleted resource
+            404:
+              description: Resource not found
+              body:
+                application/json:
+                  type: !include /library/dataTypes/Error.raml
+                  example:
+                          error_code: Not found
+                          error_detail: The requested resource could not be found but may be available in the future.
+    

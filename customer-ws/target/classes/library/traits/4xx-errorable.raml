@@ -1,0 +1,62 @@
+#%RAML 1.0 Trait
+description: Common error responses returned by an API
+usage: Apply to all operations
+
+responses:
+  400:
+    description: Bad request
+    body:
+        application/json:
+          type: !include ../dataTypes/Error.raml
+          example:
+              error_code: Bad request
+              error_detail:  The server cannot or will not process the request due to an apparent client error.
+  401:
+    description: Unauthorized request
+    body:
+      application/json:
+        type: !include ../dataTypes/Error.raml
+        example:
+          error_code: Unauthorized
+          error_detail:  Authentication is required and has failed or has not yet been provided
+  403:
+    description: Forbidden
+    body:
+      application/json:
+        type: !include ../dataTypes/Error.raml
+        example:
+                error_code: Forbidden
+                error_detail: You cannot access this resource.}
+  404:
+    description: Resource not found
+    body:
+      application/json:
+        type: !include ../dataTypes/Error.raml
+        example:
+                error_code: Not found
+                error_detail: The requested resource could not be found but may be available in the future.
+  405:
+    description: Method not allowed
+    body:
+      application/json:
+        type: !include ../dataTypes/Error.raml
+        example:
+                error_code: Method Not Allowed
+                error_detail: A request method is not supported for the requested resource
+  406:
+    description: Not Acceptable
+    body:
+      application/json:
+        type: !include ../dataTypes/Error.raml
+        example:
+            error_code: Not Acceptable
+            error_detail: The requested resource is capable of generating only content not acceptable according to the Accept headers sent in the request
+
+  415:
+    description: Unsupported Media Type
+    body:
+      application/json:
+          type: !include ../dataTypes/Error.raml
+          example:
+                error_code: Unsupported Media Type
+                error_detail: The request entity has a media type which the server or resource does not support

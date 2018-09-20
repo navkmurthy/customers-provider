@@ -1,0 +1,4 @@
+{
+"error_code" : "Conflict",
+"error_detail" : "Request could not be processed because of conflict in the current state of the resource"
+}

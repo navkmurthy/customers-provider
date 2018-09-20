@@ -1,0 +1,37 @@
+#%RAML 1.0 Trait
+
+usage: |
+  Apply this trait to any GET method that supports caching control.
+  headers:
+    If-None-Match:
+      required: false
+      type: string
+      description: |
+        The token provide is checked against the current resource.
+        If the token hasn't changed, the server returns a 304 Not Modified response
+    example: 8b8405f6-b3e6-41a0-9f72-d7a283001a09
+responses:
+  200:
+    description: |
+      The resource has been modified. The body contains the new resource.
+    headers:
+      ETag:
+        type: string
+        example: adcab6f4-0086-4966-829a-d986a2c76aa2
+      Cache-Control:
+        type: string
+        example: private, max-age=3600000
+  304:
+    headers:
+      ETag:
+        description: |
+              An ETag is an opaque identifier assigned to a specific version of a resource
+        type: string
+        example: 686897696a7c876b7e
+      Cache-Control:
+        description: |
+                The Cache-Control is used to specify directives to prevent caches from adversely interfering with the request or response
+        type: string
+        example: private, max-age=3600000
+    description:  |
+            The 304 status tells the client that its cached version is still good and that it should use that

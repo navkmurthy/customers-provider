@@ -1,0 +1,4 @@
+{
+"error_code" : "Bad request",
+"error_detail" : "The server cannot or will not process the request due to an apparent client error."
+}

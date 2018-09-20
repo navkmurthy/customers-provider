@@ -1,0 +1,12 @@
+#%RAML 1.0 Trait
+
+description: Use this headers for auditing/monitring 
+usage: Apply on all the operations to audit
+
+headers:
+  X-AuditID:
+    description: AuditID to trace the flow wich helps in analytics
+    type: string
+    minLength: 1
+    required: true
+    example: d44a6259-f027-40da-ae9d-4403424160cc

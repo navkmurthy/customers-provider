@@ -1,0 +1,13 @@
+#%RAML 1.0 Trait
+description:  409 Conflit Error response returned by an API
+usage: Apply to all operations
+
+responses:
+  409:
+    description: Conflict
+    body:
+      application/json:
+        type: !include ../dataTypes/Error.raml
+        example:
+            error_code: Conflict
+            error_detail: Request could not be processed because of conflict in the current state of the resource

@@ -1,0 +1,4 @@
+{
+"error_code" : "Method Not Allowed",
+"error_detail" : "A request method is not supported for the requested resource"
+}
